@@ -8,6 +8,13 @@ import java.util.Optional;
 
 @Repository
 public interface ProductBacklogRepository extends JpaRepository<ProductBacklog, Long> {
+
     Optional<ProductBacklog> findByNom(String nom);
+
+    Optional<ProductBacklog> findByProjectId(Long projectId);
+
+    boolean existsByProjectId(Long projectId);
 }
+
+
 

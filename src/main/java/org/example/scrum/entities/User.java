@@ -5,21 +5,45 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.scrum.entities.enums.UserRole;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "app_user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String firstname;
-    private String lastname;
-    @Column(unique=true)
-    private String username;
-    private String pwd;
-    private String role;
+@Table(name = "app_user", schema = "scrum")
+public class User extends BaseEntity {
 
+    @Column(nullable = false, length = 100)
+    private String firstname;
+
+    @Column(nullable = false, length = 100)
+    private String lastname;
+
+    @Column(unique = true, nullable = false, length = 100)
+    private String username;
+
+    @Column(nullable = false)
+    private String pwd;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private UserRole role;
+
+    @Column(unique = true, length = 100)
+    private String email;
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
+
+    // Relation avec les projets (via ProjectUser)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ProjectUser> projectAssignments = new ArrayList<>();
+
+    // Tasks assignées au développeur
+    @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
+    private List<Task> assignedTasks = new ArrayList<>();
 }

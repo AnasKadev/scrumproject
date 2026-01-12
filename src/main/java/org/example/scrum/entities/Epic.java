@@ -14,16 +14,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Epic {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String titre;
+@Table(schema = "scrum")
+public class Epic extends BaseEntity {
+
+    @Column(nullable = false, length = 200)
+    private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
-    @OneToMany(mappedBy = "epic", cascade = CascadeType.ALL)
-    private List<UserStory> userStories=new ArrayList<UserStory>();
+
+    @Column(length = 50)
+    private String color; // Pour l'affichage visuel
+
     @ManyToOne
+    @JoinColumn(name = "product_backlog_id", nullable = false)
     private ProductBacklog productBacklog;
 
-
+    @OneToMany(mappedBy = "epic", cascade = CascadeType.ALL)
+    private List<UserStory> userStories = new ArrayList<>();
 }

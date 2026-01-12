@@ -11,15 +11,23 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductBacklog {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(schema = "scrum")
+public class ProductBacklog extends BaseEntity {
+
+    @Column(nullable = false, length = 200)
     private String nom;
-    @OneToMany(mappedBy = "productBacklog", cascade = CascadeType.ALL)
-    List<Epic> epics=new ArrayList<Epic>();
-    @OneToMany(mappedBy = "productBacklog", cascade = CascadeType.ALL)
-    List<UserStory> userStories=new ArrayList<UserStory>();
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
+    // Un product backlog appartient à UN projet
+    @OneToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+
+    @OneToMany(mappedBy = "productBacklog", cascade = CascadeType.ALL)
+    private List<Epic> epics = new ArrayList<>();
+
+    @OneToMany(mappedBy = "productBacklog", cascade = CascadeType.ALL)
+    private List<UserStory> userStories = new ArrayList<>();
 }
