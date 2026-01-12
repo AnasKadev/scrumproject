@@ -27,7 +27,7 @@ public class UserStory extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
-    private UserStoryStatus status = UserStoryStatus.TO_DO;
+    private UserStoryStatus status = UserStoryStatus. USER_STORY_STATUS_ACTIVE;
 
     // Priorité MoSCoW
     @Enumerated(EnumType.STRING)

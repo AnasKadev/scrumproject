@@ -11,17 +11,13 @@ import java.util.List;
 @Repository
 public interface EpicRepository extends JpaRepository<Epic, Long> {
 
-    // Trouver par Product Backlog
     List<Epic> findByProductBacklogId(Long productBacklogId);
 
-    // Trouver par titre
     List<Epic> findByTitleContainingIgnoreCase(String title);
 
-    // Compter les User Stories dans un Epic
     @Query("SELECT COUNT(us) FROM UserStory us WHERE us.epic.id = :epicId")
     Long countUserStoriesByEpic(@Param("epicId") Long epicId);
 
-    // Compter les User Stories terminées dans un Epic
     @Query("SELECT COUNT(us) FROM UserStory us WHERE us.epic.id = :epicId AND us.status = 'DONE'")
     Long countCompletedUserStoriesByEpic(@Param("epicId") Long epicId);
 }

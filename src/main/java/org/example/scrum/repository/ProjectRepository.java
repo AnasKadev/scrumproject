@@ -12,15 +12,12 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    // Trouver par nom
     Optional<Project> findByName(String name);
 
     List<Project> findByNameContainingIgnoreCase(String name);
 
-    // Trouver les projets actifs
     List<Project> findByIsActiveTrue();
 
-    // Trouver les projets d'un utilisateur
     @Query("SELECT DISTINCT p FROM Project p JOIN p.projectMembers pm WHERE pm.user.id = :userId AND p.isActive = true")
     List<Project> findActiveProjectsByUserId(@Param("userId") Long userId);
 }

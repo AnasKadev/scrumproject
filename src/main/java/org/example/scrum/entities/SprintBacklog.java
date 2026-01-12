@@ -24,9 +24,6 @@ public class SprintBacklog extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    // Objectif du sprint
-    @Column(name = "sprint_goal", columnDefinition = "TEXT")
-    private String sprintGoal;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
@@ -38,17 +35,9 @@ public class SprintBacklog extends BaseEntity {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    // Numéro du sprint
     @Column(name = "sprint_number")
     private Integer sprintNumber;
 
-    // Vélocité planifiée
-    @Column(name = "planned_velocity")
-    private Integer plannedVelocity;
-
-    // Vélocité réelle
-    @Column(name = "actual_velocity")
-    private Integer actualVelocity;
 
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)

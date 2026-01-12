@@ -24,24 +24,14 @@ public class Project extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "start_date")
-    private LocalDate startDate;
-
-    @Column(name = "end_date")
-    private LocalDate endDate;
 
     @Column(name = "is_active")
     private boolean isActive = true;
 
-    // Un projet a UN product backlog
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
     private ProductBacklog productBacklog;
 
-    // Un projet a plusieurs sprints
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<SprintBacklog> sprints = new ArrayList<>();
 
-    // Membres du projet
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectUser> projectMembers = new ArrayList<>();
 }

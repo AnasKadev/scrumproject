@@ -1,6 +1,7 @@
 package org.example.scrum.util;
 
 import org.example.scrum.entities.User;
+import org.example.scrum.entities.enums.UserRole;
 import org.example.scrum.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ public class Initializer implements CommandLineRunner {
             admin.setLastname("User");
             admin.setUsername("admin");
             admin.setPwd("admin123");
-            admin.setRole("ADMIN");
+            admin.setRole(UserRole.ADMIN);
 
             userRepository.save(admin);
             System.out.println("Admin user created successfully!");
