@@ -29,34 +29,29 @@ public class UserStory extends BaseEntity {
     @Column(nullable = false, length = 50)
     private UserStoryStatus status = UserStoryStatus. USER_STORY_STATUS_ACTIVE;
 
-    // Priorité MoSCoW
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private Priority priority;
 
-    // Ordre de priorité numérique (pour tri)
     @Column(name = "priority_order")
     private Integer priorityOrder = 0;
 
-    // Story Points (estimation de complexité)
     @Column(name = "story_points")
     private Integer storyPoints;
 
-    // Valeur métier (1-10)
     @Column(name = "business_value")
     private Integer businessValue;
 
-    // Critères d'acceptation
     @Column(name = "acceptance_criteria", columnDefinition = "TEXT")
     private String acceptanceCriteria;
 
-    // Estimation en heures
+    // Indicateur si les critères d'acceptation sont validés
+    @Column(name = "acceptance_criteria_validated")
+    private boolean acceptanceCriteriaValidated = false;
+
     @Column(name = "estimated_hours")
     private Double estimatedHours;
 
-    // Heures réelles
-    @Column(name = "actual_hours")
-    private Double actualHours;
 
     @ManyToOne
     @JoinColumn(name = "epic_id")
@@ -72,4 +67,26 @@ public class UserStory extends BaseEntity {
 
     @OneToMany(mappedBy = "userStory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userStory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    /**
+     * Vérifie si toutes les tâches de la user story sont terminées
+     */
+    public boolean areAllTasksCompleted() {
+        if (tasks == null || tasks.isEmpty()) {
+            return true; // Pas de tâches = considéré comme terminé
+        }
+        return tasks.stream()
+                .allMatch(task -> task.getStatus() == org.example.scrum.entities.enums.TaskStatus.DONE);
+    }
+
+    /**
+     * Vérifie si la user story peut être marquée comme complétée
+     * (toutes les tâches terminées ET critères d'acceptation validés)
+     */
+    public boolean canBeCompleted() {
+        return areAllTasksCompleted() && acceptanceCriteriaValidated;
+    }
 }

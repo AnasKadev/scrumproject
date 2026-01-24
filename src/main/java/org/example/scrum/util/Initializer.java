@@ -6,6 +6,8 @@ import org.example.scrum.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class Initializer implements CommandLineRunner {
 
@@ -24,6 +26,7 @@ public class Initializer implements CommandLineRunner {
             admin.setUsername("admin");
             admin.setPwd("admin123");
             admin.setRole(UserRole.ADMIN);
+            admin.setCreatedAt(LocalDateTime.now());
 
             userRepository.save(admin);
             System.out.println("Admin user created successfully!");

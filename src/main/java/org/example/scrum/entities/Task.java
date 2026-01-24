@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.scrum.entities.enums.TaskStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter @Setter
 @NoArgsConstructor
@@ -24,19 +27,15 @@ public class Task extends BaseEntity {
     @Column(nullable = false, length = 50)
     private TaskStatus status = TaskStatus.TO_DO;
 
-    // Estimation en heures
     @Column(name = "estimated_hours")
     private Double estimatedHours;
 
-    // Heures réelles
     @Column(name = "actual_hours")
     private Double actualHours;
 
-    // Heures restantes
     @Column(name = "remaining_hours")
     private Double remainingHours;
 
-    // Ordre de la tâche
     @Column(name = "task_order")
     private Integer taskOrder = 0;
 
@@ -48,8 +47,11 @@ public class Task extends BaseEntity {
     @JoinColumn(name = "sprint_backlog_id")
     private SprintBacklog sprintBacklog;
 
-    // Développeur assigné
+    // Membre du projet assigné à la tâche
     @ManyToOne
     @JoinColumn(name = "assigned_to")
-    private User assignedTo;
+    private ProjectUser assignedTo;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }

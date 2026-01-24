@@ -24,8 +24,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findBySprintBacklogIdAndAssignedToIsNull(Long sprintBacklogId);
 
-
-
+    List<Task> findByUserStoryIdOrderByTaskOrderAsc(Long userStoryId);
 
 }
 

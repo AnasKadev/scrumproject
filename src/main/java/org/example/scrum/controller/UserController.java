@@ -17,50 +17,34 @@ public class UserController {
 
     private final UserService userService;
 
-    /**
-     * Créer un nouvel utilisateur
-     * POST /api/users
-     */
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserRequest request) {
         UserDTO created = userService.createUser(request);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    /**
-     * Récupérer tous les utilisateurs
-     * GET /api/users
-     */
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
-    /**
-     * Récupérer tous les utilisateurs actifs
-     * GET /api/users/active
-     */
+
     @GetMapping("/active")
     public ResponseEntity<List<UserDTO>> getActiveUsers() {
         List<UserDTO> users = userService.getActiveUsers();
         return ResponseEntity.ok(users);
     }
 
-    /**
-     * Récupérer un utilisateur par ID
-     * GET /api/users/{id}
-     */
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         UserDTO user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
-    /**
-     * Récupérer les utilisateurs par rôle
-     * GET /api/users/role/{role}
-     */
+
     @GetMapping("/role/{role}")
     public ResponseEntity<List<UserDTO>> getUsersByRole(@PathVariable String role) {
         List<UserDTO> users = userService.getUsersByRole(role.toUpperCase());

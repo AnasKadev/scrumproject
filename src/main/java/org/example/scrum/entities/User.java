@@ -39,11 +39,6 @@ public class User extends BaseEntity {
     @Column(name = "is_active")
     private boolean isActive = true;
 
-    // Relation avec les projets (via ProjectUser)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ProjectUser> projectAssignments = new ArrayList<>();
-
-    // Tasks assignées au développeur
-    @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
-    private List<Task> assignedTasks = new ArrayList<>();
 }

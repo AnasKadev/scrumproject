@@ -23,13 +23,12 @@ public class UserService {
 
     @Transactional
     public UserDTO createUser(CreateUserRequest request) {
-        // verifier pas de meme username
+
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new DuplicateResourceException(
                     "Un utilisateur avec le username '" + request.getUsername() + "' existe deja");
         }
 
-        // verifier l email
         if (request.getEmail() != null && userRepository.existsByEmail(request.getEmail())) {
             throw new DuplicateResourceException(
                     "Un utilisateur avec l email '" + request.getEmail() + "' existe deja");

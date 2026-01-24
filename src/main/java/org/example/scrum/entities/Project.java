@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +23,14 @@ public class Project extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-
     @Column(name = "is_active")
     private boolean isActive = true;
 
-    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProductBacklog productBacklog;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SprintBacklog> sprintBacklogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectUser> projectMembers = new ArrayList<>();

@@ -161,12 +161,7 @@ public class ProjectUserService {
         return getProjectMembersByRole(projectId, "SCRUM_MASTER");
     }
 
-    /**
-     * Obtenir tous les développeurs d'un projet
-     *
-     * @param projectId ID du projet
-     * @return Liste des développeurs
-     */
+
     public List<ProjectUserDTO> getDevelopers(Long projectId) {
         return getProjectMembersByRole(projectId, "DEVELOPER");
     }

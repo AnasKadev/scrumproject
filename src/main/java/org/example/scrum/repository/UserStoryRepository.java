@@ -31,6 +31,7 @@ public interface UserStoryRepository extends JpaRepository<UserStory, Long> {
     @Query("SELECT us FROM UserStory us WHERE us.productBacklog.id = :productBacklogId ORDER BY us.priorityOrder ASC, us.businessValue DESC")
     List<UserStory> findByProductBacklogIdOrderByPriority(@Param("productBacklogId") Long productBacklogId);
 
+    List<UserStory> findByProductBacklogIdOrderByPriorityOrderAsc(Long productBacklogId);
 
 }
 
